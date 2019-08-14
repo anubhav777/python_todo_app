@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% block content %}
+<form method="POST" enctype="multipart/form-data">{% csrf_token %}
+{{ form }}
+<input type="submit" value="ADD"/>
+</form>
+
+<table >
+    <thead>
+        <th>Todo Work</th>
+        <th>Date</th>
+        <th>Status</th>
+        <th>User</th>
+        <th>Edit</th>
+        <th>Delete</th>
+    </thead>
+    <tbody>
+   {% for newobj in obj%}
+    <tr>
+        <td>{{newobj.workname}}</td>
+        <td>{{ newobj.date }}</td>
+        <td>{{ newobj.status }}</td>
+        <td> {{ newobj.userid }}</td>
+        <td><a href="{% url 'works:editform' newobj.id %}"><button>Edit</button></a></td>
+        <td><form action="{% url 'works:detail' newobj.id  %}" method="POST">{% csrf_token %}
+            <input type="submit" value="Delete"/>
+        </form></td>
+        
+    </tr>
+   {% endfor %}
+</tbody>
+  </table>
+{% endblock %}
+  <!-- <script>
+      let dg=document.getElementById('trg')
+      console.log('hi')
+      dg.addEventListener('click',(e)=>{
+          e.preventDefault()
+          fetch('http://127.0.0.1:8000/works/delete/1')
+      })
+      </script> -->
